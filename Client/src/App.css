@@ -1,0 +1,67 @@
+body{
+    margin:0;
+    padding:0;
+    font-family:Arial, Helvetica, sans-serif;
+    background:#fffafc;
+}
+
+*{
+    box-sizing:border-box;
+}
+/* Light Theme */
+
+body.light{
+    background:#ffffff;
+    color:#222;
+    transition:0.3s;
+}
+
+/* Dark Theme */
+
+body.dark{
+    background:#121212;
+    color:white;
+    transition:0.3s;
+}
+
+/* Navbar */
+
+body.dark .navbar{
+    background:#1e1e1e;
+}
+
+body.dark .logo{
+    color:#ffcc80;
+}
+
+body.dark .nav-links a,
+body.dark .icon{
+    color:white;
+}
+
+/* Cards */
+
+body.dark .product-card{
+    background:#222;
+    color:white;
+}
+
+body.dark .product-form{
+    background:#2a2a2a;
+}
+
+/* Inputs */
+
+body.dark input,
+body.dark select{
+    background:#333;
+    color:white;
+    border:1px solid #555;
+}
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark p{
+    color:white;
+}

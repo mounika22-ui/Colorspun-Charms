@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.register-container {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #ffe6f0, #fff8fc);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+}
+
+.register-box {
+    width: 420px;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+.register-box h2 {
+    text-align: center;
+    color: #d63384;
+    margin-bottom: 25px;
+    font-size: 32px;
+}
+
+.register-box input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 18px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    outline: none;
+    font-size: 16px;
+    transition: .3s;
+}
+
+.register-box input:focus {
+    border-color: #d63384;
+    box-shadow: 0 0 8px rgba(214,51,132,.3);
+}
+
+.register-box button {
+    width: 100%;
+    padding: 14px;
+    background: #d63384;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.register-box button:hover {
+    background: #b5176b;
+}
+
+.register-box p {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.register-box a {
+    color: #d63384;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-box a:hover {
+    text-decoration: underline;
+}
+
+@media(max-width:768px){
+
+.register-box{
+    width:95%;
+    padding:25px;
+}
+
+.register-box h2{
+    font-size:28px;
+}
+
+}

@@ -1,0 +1,42 @@
+.product-details{
+    width:90%;
+    margin:50px auto;
+    display:flex;
+    gap:50px;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.product-image img{
+    width:400px;
+    border-radius:15px;
+    box-shadow:0 5px 15px rgba(0,0,0,.2);
+}
+
+.product-info{
+    flex:1;
+}
+
+.product-info h1{
+    color:#d63384;
+    margin-bottom:20px;
+}
+
+.product-info h2{
+    color:#444;
+    margin-bottom:20px;
+}
+
+.product-info p{
+    line-height:1.8;
+    margin-bottom:25px;
+}
+
+.product-info button{
+    padding:15px 35px;
+    border:none;
+    background:#d63384;
+    color:white;
+    border-radius:30px;
+    cursor:pointer;
+}
