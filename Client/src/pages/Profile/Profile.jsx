@@ -1,42 +1,59 @@
-import "./Profile.css";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Profile.css";
 
 function Profile() {
-  const [user, setUser] = useState({
-    name: "Guest",
-    email: "",
-  });
-
-  const [lastPage, setLastPage] = useState("");
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const storedUser = localStorage.getItem("loggedInUser");
-
-    if (storedUser) {
-      const loggedInUser = JSON.parse(storedUser);
-
-      setUser({
-        name: loggedInUser.name || "Guest",
-        email: loggedInUser.email || "",
-      });
-    }
-
-    const page = sessionStorage.getItem("lastPage");
-    if (page) {
-      setLastPage(page);
-    }
+    const loggedUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    setUser(loggedUser);
   }, []);
 
+  const handleLogout = () => {
+    localStorage.removeItem("loggedInUser");
+    alert("Logged Out Successfully!");
+    navigate("/login");
+  };
+
+  if (!user) {
+    return (
+      <div className="profile-container">
+        <div className="profile-card">
+          <h2>No User Logged In</h2>
+          <button onClick={() => navigate("/login")}>
+            Login
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="profile">
-      <h1>My Profile</h1>
-
+    <div className="profile-container">
       <div className="profile-card">
-        <h3>Name : {user.name}</h3>
-        <h3>Email : {user.email}</h3>
-        <h3>Last Visited Page : {lastPage}</h3>
 
-        <button>Edit Profile</button>
+        <div className="profile-avatar">
+          👤
+        </div>
+
+        <h1>My Profile</h1>
+
+        <div className="profile-info">
+          <p><strong>Name:</strong> {user.name}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Phone:</strong> {user.phone}</p>
+        
+        </div>
+
+        <button
+          className="logout-btn"
+          onClick={handleLogout}
+        >
+          Logout
+        </button>
+
       </div>
     </div>
   );
