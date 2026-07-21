@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../../api/api";
 import "./Register.css";
 
 function Register() {
-
   const navigate = useNavigate();
 
   const [user, setUser] = useState({
     name: "",
     email: "",
     phone: "",
+    address: "",
     password: "",
     confirmPassword: "",
   });
@@ -21,13 +22,14 @@ function Register() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (
       !user.name ||
       !user.email ||
       !user.phone ||
+      !user.address ||
       !user.password ||
       !user.confirmPassword
     ) {
@@ -40,44 +42,43 @@ function Register() {
       return;
     }
 
-    // Save User
-    localStorage.setItem(
-      "colorspunUser",
-      JSON.stringify(user)
-    );
+    try {
+      const response = await api.post("/auth/register", {
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        address: user.address,
+        password: user.password,
+      });
 
-    // Save Activity
-    const activity =
-      JSON.parse(localStorage.getItem("activity")) || [];
+      alert(response.data.message);
 
-    activity.unshift("📝 New User Registered");
+      setUser({
+        name: "",
+        email: "",
+        phone: "",
+        address: "",
+        password: "",
+        confirmPassword: "",
+      });
 
-    localStorage.setItem(
-      "activity",
-      JSON.stringify(activity)
-    );
+      navigate("/login");
+    } catch (error) {
+      console.log(error);
 
-    alert("Registration Successful!");
-
-    setUser({
-      name: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: "",
-    });
-
-    navigate("/login");
+      alert(
+        error.response?.data?.message ||
+        "Registration Failed"
+      );
+    }
   };
 
   return (
     <div className="register-container">
-
       <form
         className="register-box"
         onSubmit={handleSubmit}
       >
-
         <h2>Create Account</h2>
 
         <input
@@ -108,6 +109,15 @@ function Register() {
         />
 
         <input
+          type="text"
+          name="address"
+          placeholder="Address"
+          value={user.address}
+          onChange={handleChange}
+          required
+        />
+
+        <input
           type="password"
           name="password"
           placeholder="Password"
@@ -128,9 +138,7 @@ function Register() {
         <button type="submit">
           Register
         </button>
-
       </form>
-
     </div>
   );
 }
