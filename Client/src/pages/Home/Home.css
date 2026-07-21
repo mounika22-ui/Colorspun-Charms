@@ -1,3 +1,21 @@
 .home{
+    min-height:100vh;
     width:100%;
+    background-image:
+        linear-gradient(
+            rgba(255,255,255,0.55),
+            rgba(255,255,255,0.55)
+        ),
+        url("../../assets/images/bg.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+    background-attachment:fixed;
+}
+
+/* Optional */
+.home *{
+    position:relative;
+    z-index:1;
 }
