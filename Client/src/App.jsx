@@ -13,6 +13,7 @@ import Productdetails from "./pages/Productdetails/Productdetails";
 import Contact from "./pages/Contact/Contact";
 import Profile from "./pages/Profile/Profile";
 import Orders from "./pages/Orders/Orders";
+import Checkout from "./pages/Checkout/Checkout";
 
 import "./App.css";
 
@@ -45,6 +46,7 @@ function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/checkout" element={<Checkout />} />
       </Routes>
 
       <Footer />
