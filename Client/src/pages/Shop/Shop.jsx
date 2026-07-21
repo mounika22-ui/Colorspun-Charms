@@ -50,15 +50,23 @@ function Shop() {
   const [deletedProduct, setDeletedProduct] = useState(null);
 
   useEffect(() => {
-    const savedProducts = JSON.parse(localStorage.getItem("products"));
+  const savedProducts = JSON.parse(localStorage.getItem("products"));
 
-    if (savedProducts) {
-      setProducts(savedProducts);
-    } else {
-      setProducts(defaultProducts);
-      localStorage.setItem("products", JSON.stringify(defaultProducts));
-    }
-  }, []);
+  if (
+    savedProducts &&
+    Array.isArray(savedProducts) &&
+    savedProducts.length > 0
+  ) {
+    setProducts(savedProducts);
+  } else {
+    setProducts(defaultProducts);
+    localStorage.setItem(
+      "products",
+      JSON.stringify(defaultProducts)
+    );
+  }
+}, []);
+
 
   useEffect(() => {
     localStorage.setItem("products", JSON.stringify(products));
@@ -174,6 +182,27 @@ function Shop() {
       alert("Product Restored!");
     }
   };
+  const addToCart = (product) => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const existingProduct = cart.find(
+    (item) => item.id === product.id
+  );
+
+  if (existingProduct) {
+    existingProduct.quantity =
+      (existingProduct.quantity || 1) + 1;
+  } else {
+    cart.push({
+      ...product,
+      quantity: 1,
+    });
+  }
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  alert("Product Added to Cart!");
+};
 
   const exportProducts = () => {
     const blob = new Blob(
@@ -337,24 +366,27 @@ function Shop() {
               <h3>₹{product.price}</h3>
 
               <div className="btn-group">
-                <button
-                  className="edit-btn"
-                  onClick={() =>
-                    handleEdit(product)
-                  }
-                >
-                  Edit
-                </button>
+  <button
+    className="edit-btn"
+    onClick={() => handleEdit(product)}
+  >
+    Edit
+  </button>
 
-                <button
-                  className="delete-btn"
-                  onClick={() =>
-                    handleDelete(product.id)
-                  }
-                >
-                  Delete
-                </button>
-              </div>
+  <button
+    className="delete-btn"
+    onClick={() => handleDelete(product.id)}
+  >
+    Delete
+  </button>
+
+  <button
+    className="cart-btn"
+    onClick={() => addToCart(product)}
+  >
+    Add to Cart
+  </button>
+</div>
             </div>
           ))
         )}
