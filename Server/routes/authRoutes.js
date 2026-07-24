@@ -1,19 +1,17 @@
 import express from "express";
+
 import {
-  registerUser,
-  loginUser,
-  getProfile,
-} from "../controllers/authController.js";
+  getCart,
+  addToCart,
+  updateCart,
+  removeCartItem,
+} from "../controllers/cartController.js";
 
 const router = express.Router();
 
-// Register User
-router.post("/register", registerUser);
-
-// Login User
-router.post("/login", loginUser);
-
-// Get Logged-in User Profile
-router.get("/profile", getProfile);
+router.get("/", getCart);
+router.post("/", addToCart);
+router.put("/:id", updateCart);
+router.delete("/:id", removeCartItem);
 
 export default router;
