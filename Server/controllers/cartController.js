@@ -20,7 +20,12 @@ export const getCart = async (req, res) => {
 // Add Item to Cart
 export const addToCart = async (req, res) => {
   try {
-    const cartItem = await Cart.create(req.body);
+    const { productId, quantity } = req.body;
+
+    const cartItem = await Cart.create({
+      productId,
+      quantity,
+    });
 
     res.status(201).json({
       success: true,
@@ -28,6 +33,8 @@ export const addToCart = async (req, res) => {
       cartItem,
     });
   } catch (error) {
+    console.log(error);
+
     res.status(500).json({
       success: false,
       message: error.message,
