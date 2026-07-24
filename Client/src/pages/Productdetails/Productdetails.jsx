@@ -1,16 +1,23 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import api from "../../api/api";
-import "./Productdetails.css";
+import "./ProductDetails.css";
 
-function Productdetails() {
+import bangle from "../../assets/images/bangle.jpg";
+import keychain from "../../assets/images/keychain.jpg";
+import frame from "../../assets/images/frame.jpg";
+
+function ProductDetails() {
   const { id } = useParams();
-  const navigate = useNavigate();
+
+  const imageMap = {
+    bangle,
+    keychain,
+    frame,
+  };
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [adding, setAdding] = useState(false);
-  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchProduct();
@@ -18,89 +25,65 @@ function Productdetails() {
 
   const fetchProduct = async () => {
     try {
-      setLoading(true);
-
       const res = await api.get(`/products/${id}`);
-
       setProduct(res.data.product);
-
-      setLoading(false);
-    } catch (err) {
-      setError("Product not found");
+    } catch (error) {
+      console.log(error);
+      alert("Unable to load product");
+    } finally {
       setLoading(false);
     }
   };
 
   const addToCart = async () => {
     try {
-      setAdding(true);
-
       await api.post("/cart", {
         productId: product._id,
         quantity: 1,
       });
 
-      alert("Product Added to Cart");
-
-      navigate("/cart");
-    } catch (err) {
-      alert("Unable to add product to cart");
-    } finally {
-      setAdding(false);
+      alert("Added To Cart");
+    } catch (error) {
+      console.log(error);
+      alert("Unable to add to cart");
     }
   };
 
   if (loading) {
-    return (
-      <div className="product-details">
-        <h2>Loading Product...</h2>
-      </div>
-    );
+    return <h2>Loading...</h2>;
   }
 
-  if (error) {
-    return (
-      <div className="product-details">
-        <h2>{error}</h2>
-      </div>
-    );
+  if (!product) {
+    return <h2>Product Not Found</h2>;
   }
 
   return (
     <div className="product-details">
-
-      <div className="product-image">
+      <div className="product-details-card">
         <img
-          src={product.image}
+          src={imageMap[product.image] || bangle}
           alt={product.name}
+          className="product-image"
         />
+
+        <div className="product-info">
+          <h1>{product.name}</h1>
+
+          <h2>₹{product.price}</h2>
+
+          <h3>{product.category}</h3>
+
+          <p>{product.description}</p>
+
+          <h3>Stock : {product.stock}</h3>
+
+          <button onClick={addToCart}>
+            Add to Cart
+          </button>
+        </div>
       </div>
-
-      <div className="product-info">
-
-        <h1>{product.name}</h1>
-
-        <h2>₹{product.price}</h2>
-
-        <h4>{product.category}</h4>
-
-        <p>{product.description}</p>
-
-        <p>
-          <strong>Stock :</strong> {product.stock}
-        </p>
-
-        <button
-          onClick={addToCart}
-          disabled={adding}
-        >
-          {adding ? "Adding..." : "Add to Cart"}
-        </button>
-
-      </div>
-
     </div>
   );
 }
 
-export default Productdetails;
+export default ProductDetails;
