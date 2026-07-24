@@ -27,7 +27,7 @@ app.use(logger);
 app.get("/", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "Welcome to ColorSpun Charms Backend ",
+    message: "Welcome to ColorSpun Charms Backend",
   });
 });
 
@@ -37,8 +37,8 @@ app.use("/api/products", productRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 
-// Invalid Route
-app.use("*", (req, res) => {
+// 404 Route
+app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: "Route Not Found",
@@ -49,5 +49,5 @@ app.use("*", (req, res) => {
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
-  console.log(` Server Running on http://localhost:${PORT}`);
+  console.log(`Server Running on http://localhost:${PORT}`);
 });
